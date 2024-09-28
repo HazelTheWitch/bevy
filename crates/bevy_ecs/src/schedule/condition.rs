@@ -6,7 +6,7 @@ use crate::system::{
 };
 
 /// A type-erased run condition stored in a [`Box`].
-pub type BoxedCondition<In = ()> = Box<dyn ReadOnlySystem<In = In, Out = bool>>;
+pub type BoxedCondition<In = ()> = Box<Box<dyn ReadOnlySystem<In = In, Out = bool>>>;
 
 /// A system that determines if one or more scheduled systems should run.
 ///

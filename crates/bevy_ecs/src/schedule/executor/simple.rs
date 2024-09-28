@@ -128,7 +128,7 @@ fn evaluate_and_fold_conditions(conditions: &mut [BoxedCondition], world: &mut W
     #[allow(clippy::unnecessary_fold)]
     conditions
         .iter_mut()
-        .map(|condition| __rust_begin_short_backtrace::readonly_run(&mut **condition, world))
+        .map(|condition| __rust_begin_short_backtrace::readonly_run(&mut ***condition, world))
         .fold(true, |acc, res| acc && res)
 }
 

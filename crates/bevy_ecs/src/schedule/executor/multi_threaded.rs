@@ -730,7 +730,7 @@ unsafe fn evaluate_and_fold_conditions(
         .map(|condition| {
             // SAFETY: The caller ensures that `world` has permission to
             // access any data required by the condition.
-            unsafe { __rust_begin_short_backtrace::readonly_run_unsafe(&mut **condition, world) }
+            unsafe { __rust_begin_short_backtrace::readonly_run_unsafe(&mut ***condition, world) }
         })
         .fold(true, |acc, res| acc && res)
 }

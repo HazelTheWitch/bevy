@@ -18,7 +18,7 @@ fn new_condition<M>(condition: impl Condition<M>) -> BoxedCondition {
         condition_system.name()
     );
 
-    Box::new(condition_system)
+    Box::new(Box::new(condition_system))
 }
 
 fn ambiguous_with(graph_info: &mut GraphInfo, set: InternedSystemSet) {
