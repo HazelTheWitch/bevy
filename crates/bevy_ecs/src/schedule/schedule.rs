@@ -648,6 +648,7 @@ impl ScheduleGraph {
         self.systems
             .get(id.index())
             .and_then(|system| system.inner.as_deref())
+            .map(|system| &**system)
     }
 
     /// Returns the system at the given [`NodeId`].
@@ -687,7 +688,7 @@ impl ScheduleGraph {
             .zip(self.system_conditions.iter())
             .enumerate()
             .filter_map(|(i, (system_node, condition))| {
-                let system = system_node.inner.as_deref()?;
+                let system = &**system_node.inner.as_deref()?;
                 Some((NodeId::System(i), system, condition.as_slice()))
             })
     }
@@ -1190,9 +1191,9 @@ impl ScheduleGraph {
         let id = NodeId::System(self.systems.len());
 
         self.systems
-            .push(SystemNode::new(Box::new(IntoSystem::into_system(
+            .push(SystemNode::new(Box::new(Box::new(IntoSystem::into_system(
                 apply_deferred,
-            ))));
+            )))));
         self.system_conditions.push(Vec::new());
 
         // ignore ambiguities with auto sync points

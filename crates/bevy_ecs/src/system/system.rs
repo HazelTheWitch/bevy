@@ -158,7 +158,9 @@ pub unsafe trait ReadOnlySystem: System {
 }
 
 /// A convenience type alias for a boxed [`System`] trait object.
-pub type BoxedSystem<In = (), Out = ()> = Box<dyn System<In = In, Out = Out>>;
+/// 
+/// Lia: Boxed systems are double boxed to allow for safe ffi transport.
+pub type BoxedSystem<In = (), Out = ()> = Box<Box<dyn System<In = In, Out = Out>>>;
 
 pub(crate) fn check_system_change_tick(last_run: &mut Tick, this_run: Tick, system_name: &str) {
     if last_run.check_tick(this_run) {

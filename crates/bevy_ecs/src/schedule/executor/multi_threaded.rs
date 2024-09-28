@@ -591,7 +591,7 @@ impl ExecutorState {
                 // - `update_archetype_component_access` has been called.
                 unsafe {
                     __rust_begin_short_backtrace::run_unsafe(
-                        &mut **system,
+                        &mut ***system,
                         context.environment.world_cell,
                     );
                 };
@@ -634,7 +634,7 @@ impl ExecutorState {
         } else {
             let task = async move {
                 let res = std::panic::catch_unwind(AssertUnwindSafe(|| {
-                    __rust_begin_short_backtrace::run(&mut **system, world);
+                    __rust_begin_short_backtrace::run(&mut ***system, world);
                 }));
                 context.system_completed(system_index, res, system);
             };

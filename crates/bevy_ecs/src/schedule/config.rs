@@ -38,7 +38,7 @@ where
     F: IntoSystem<(), (), Marker>,
 {
     fn into_configs(self) -> SystemConfigs {
-        SystemConfigs::new_system(Box::new(IntoSystem::into_system(self)))
+        SystemConfigs::new_system(Box::new(Box::new(IntoSystem::into_system(self))))
     }
 }
 

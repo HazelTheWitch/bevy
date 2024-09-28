@@ -115,7 +115,7 @@ impl World {
         &mut self,
         system: S,
     ) -> SystemId<I, O> {
-        self.register_boxed_system(Box::new(IntoSystem::into_system(system)))
+        self.register_boxed_system(Box::new(Box::new(IntoSystem::into_system(system))))
     }
 
     /// Similar to [`Self::register_system`], but allows passing in a [`BoxedSystem`].
@@ -382,7 +382,7 @@ impl<I: 'static, O: 'static> RegisterSystem<I, O> {
     /// Creates a new [Command] struct, which can be added to [Commands](crate::system::Commands)
     pub fn new<M, S: IntoSystem<I, O, M> + 'static>(system: S, entity: Entity) -> Self {
         Self {
-            system: Box::new(IntoSystem::into_system(system)),
+            system: Box::new(Box::new(IntoSystem::into_system(system))),
             entity,
         }
     }
